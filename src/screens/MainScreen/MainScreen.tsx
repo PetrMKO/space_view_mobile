@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { nasaApi, PhotoOfDay } from "../../API/api";
+import { nasaApi, PhotoOfDay } from "../../API/nasaApi";
 
 export const MainScreen = () => {
   const [photos, setPhotos] = useState<PhotoOfDay[]>([]);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { nasaApi, PhotoOfDay } from "../../API/api";
+import { nasaApi, PhotoOfDay } from "../../API/nasaApi";
 
 export const AccountScreen = () => {
   const [photos, setPhotos] = useState<PhotoOfDay[]>([]);

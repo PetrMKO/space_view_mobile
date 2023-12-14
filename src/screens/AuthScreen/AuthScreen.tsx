@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,13 +7,25 @@ import {
   View,
 } from "react-native";
 
+import { userApi } from "../../API/userApi";
+import { UserContext } from "../../context/UserContext/userContext";
+
 export const SignInScreen = () => {
+  const { setUser } = useContext(UserContext);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [isError, setIsError] = useState<boolean>();
 
   const handleSubmit = () => {
-    // Здесь должна быть логика обработки данных формы
-    console.log("Login:", login, "Password:", password);
+    userApi.login(login, password).then(({ data }) => {
+      if (data.length) {
+        setUser(data[0]);
+        console.log(data[0]);
+        console.log("asdfadf");
+      } else {
+        setIsError(true);
+      }
+    });
   };
 
   return (

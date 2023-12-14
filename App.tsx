@@ -1,7 +1,9 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useMemo, useState } from "react";
 
+import { User } from "./src/API/userApi";
+import { UserContext } from "./src/context/UserContext/userContext";
 import { AuthSelector, SignInScreen } from "./src/screens";
 import { AccountScreen } from "./src/screens/AccountScreen/AccountScreen";
 import { MainScreen } from "./src/screens/MainScreen/MainScreen";
@@ -9,15 +11,27 @@ import { MainScreen } from "./src/screens/MainScreen/MainScreen";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [user, setUser] = useState<User>();
+
+  const userContextValue = useMemo(
+    () => ({
+      setUser,
+      user,
+    }),
+    [user]
+  );
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="main" component={MainScreen} />
-        <Stack.Screen name="auth-selector" component={AuthSelector} />
-        <Stack.Screen name="auth" component={SignInScreen} />
-        <Stack.Screen name="account" component={AccountScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserContext.Provider value={userContextValue}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="main" component={MainScreen} />
+          <Stack.Screen name="auth-selector" component={AuthSelector} />
+          <Stack.Screen name="auth" component={SignInScreen} />
+          <Stack.Screen name="account" component={AccountScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 };
 
