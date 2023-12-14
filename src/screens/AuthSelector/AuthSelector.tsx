@@ -1,15 +1,25 @@
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+import { RootStackParamList, Screens } from "../../types/RootStackParamList";
+
 export const AuthSelector = ({ navigation: { navigate } }) => {
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   const handleSignIn = () => {
     // Обработка нажатия на кнопку Sign up
-    console.log("Sign up button pressed");
+    navigation.push(Screens.Auth, {
+      mode: "login",
+    });
   };
 
   const handleLogIn = () => {
     // Обработка нажатия на кнопку Log in
-    console.log("Log in button pressed");
+    navigation.push(Screens.Auth, {
+      mode: "redister",
+    });
   };
 
   return (

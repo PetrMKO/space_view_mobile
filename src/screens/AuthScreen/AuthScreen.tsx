@@ -25,7 +25,7 @@ export const SignInScreen: FC = () => {
     userApi.login(login, password).then(({ data }) => {
       if (data.length) {
         setUser(data[0]);
-        navigation.push(Screens.Main);
+        navigation.reset(Screens.Main);
         console.log(data[0]);
         console.log("asdfadf");
       } else {

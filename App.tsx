@@ -32,10 +32,31 @@ const App = () => {
             initialParams={{
               mode: "login",
             }}
+            options={{
+              title: "Space View",
+            }}
           />
-          <Stack.Screen name={Screens.AuthSelector} component={AuthSelector} />
-          <Stack.Screen name={Screens.Main} component={MainScreen} />
-          <Stack.Screen name={Screens.Account} component={AccountScreen} />
+          <Stack.Screen
+            name={Screens.AuthSelector}
+            component={AuthSelector}
+            options={{
+              title: "Space View",
+            }}
+          />
+          <Stack.Screen
+            name={Screens.Main}
+            component={MainScreen}
+            options={{
+              title: "Gallery",
+            }}
+          />
+          <Stack.Screen
+            name={Screens.Account}
+            component={AccountScreen}
+            options={{
+              title: "Account",
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
