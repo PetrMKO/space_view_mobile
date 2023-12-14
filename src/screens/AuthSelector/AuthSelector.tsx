@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export const AuthSelector = () => {
+export const AuthSelector = ({ navigation }) => {
   const handleSignIn = () => {
-    // Обработка нажатия на кнопку Sign in
-    console.log("Sign in button pressed");
+    // Обработка нажатия на кнопку Sign up
+    console.log("Sign up button pressed");
   };
 
   const handleLogIn = () => {
@@ -18,7 +18,7 @@ export const AuthSelector = () => {
         <Text style={styles.headerText}>Image Galleries</Text>
       </View>
       <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-        <Text style={styles.buttonText}>Sign in</Text>
+        <Text style={styles.buttonText}>Sign up</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={handleLogIn}>
         <Text style={styles.buttonText}>Log in</Text>

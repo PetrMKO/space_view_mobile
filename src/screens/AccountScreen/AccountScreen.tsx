@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import { nasaApi, PhotoOfDay } from "../../API/api";
 
-export const MainScreen = () => {
+export const AccountScreen = () => {
   const [photos, setPhotos] = useState<PhotoOfDay[]>([]);
 
   useEffect(() => {
