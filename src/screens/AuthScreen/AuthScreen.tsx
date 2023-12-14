@@ -1,4 +1,7 @@
-import React, { useContext, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackNavigationProp } from "@react-navigation/stack";
+import React, { FC, useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,17 +12,25 @@ import {
 
 import { userApi } from "../../API/userApi";
 import { UserContext } from "../../context/UserContext/userContext";
+import { RootStackParamList, Screens } from "../../types/RootStackParamList";
 
-export const SignInScreen = () => {
+type Props = NativeStackScreenProps<RootStackParamList, Screens.Auth>;
+
+export const SignInScreen: FC = () => {
   const { setUser } = useContext(UserContext);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState<boolean>();
 
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
   const handleSubmit = () => {
     userApi.login(login, password).then(({ data }) => {
       if (data.length) {
         setUser(data[0]);
+
+        // use route.params.mode to determine either u're in login mode or in register
+        navigation.push(Screens.Main);
         console.log(data[0]);
         console.log("asdfadf");
       } else {

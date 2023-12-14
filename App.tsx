@@ -7,8 +7,9 @@ import { UserContext } from "./src/context/UserContext/userContext";
 import { AuthSelector, SignInScreen } from "./src/screens";
 import { AccountScreen } from "./src/screens/AccountScreen/AccountScreen";
 import { MainScreen } from "./src/screens/MainScreen/MainScreen";
+import { RootStackParamList, Screens } from "./src/types/RootStackParamList";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   const [user, setUser] = useState<User>();
@@ -25,10 +26,16 @@ const App = () => {
     <UserContext.Provider value={userContextValue}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="main" component={MainScreen} />
-          <Stack.Screen name="auth-selector" component={AuthSelector} />
-          <Stack.Screen name="auth" component={SignInScreen} />
-          <Stack.Screen name="account" component={AccountScreen} />
+          <Stack.Screen name={Screens.Main} component={MainScreen} />
+          <Stack.Screen name={Screens.AuthSelector} component={AuthSelector} />
+          <Stack.Screen
+            name={Screens.Auth}
+            component={SignInScreen}
+            initialParams={{
+              mode: "login",
+            }}
+          />
+          <Stack.Screen name={Screens.Account} component={AccountScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>

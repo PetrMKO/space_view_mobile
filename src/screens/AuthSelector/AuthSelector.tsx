@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export const AuthSelector = ({ navigation }) => {
+export const AuthSelector = ({ navigation: { navigate } }) => {
   const handleSignIn = () => {
     // Обработка нажатия на кнопку Sign up
     console.log("Sign up button pressed");
