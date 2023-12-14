@@ -1,5 +1,6 @@
-import { PhotoOfDay } from "API/nasaApi";
 import axios, { AxiosInstance } from "axios";
+
+import { PhotoOfDay } from "./nasaApi";
 
 export const userRequest = axios.create({
   baseURL: "http://localhost:3030/",

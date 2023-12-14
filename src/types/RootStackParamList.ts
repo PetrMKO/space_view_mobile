@@ -1,4 +1,4 @@
-type RootStackParamList = "login" | "signin";
+type AuthMode = "login" | "signin";
 
 export enum Screens {
   Main = "Main",
@@ -10,8 +10,9 @@ export enum Screens {
 export type RootStackParamList = {
   [Screens.Main]: undefined;
   [Screens.Account]: undefined;
+  [Screens.AuthSelector]: undefined;
   [Screens.Auth]: {
-    mode: RootStackParamList;
+    mode: AuthMode;
   };
   [Screens.Main]: undefined;
 };

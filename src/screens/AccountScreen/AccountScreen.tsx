@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 
-import { nasaApi, PhotoOfDay } from "../../API/nasaApi";
+import { PhotoOfDay } from "../../API/nasaApi";
+import { userApi } from "../../API/userApi";
 
 export const AccountScreen = () => {
   const [photos, setPhotos] = useState<PhotoOfDay[]>([]);
 
   useEffect(() => {
-    nasaApi.getPhotosOfDay({ count: 6 }).then(({ data }) => {
-      setPhotos(data.filter((item) => item.media_type === "image"));
+    userApi.getFavorites("user01").then(({ data }) => {
+      setPhotos(data);
     });
   }, []);
 
   return (
     <View style={styles.container}>
       {photos.length}
-      {/* <Text style={styles.header}>Image Galleries</Text> */}
-      {/* <Text style={styles.subHeader}>The best photos according to users</Text> */}
-      {/* <ScrollView style={styles.galleryContainer}> */}
-      {/*  {photos.map((photo) => */}
-      {/*    <Image */}
-      {/*      key={photo.url} */}
-      {/*      source={{ uri: photo.url }} */}
-      {/*      style={styles.image} */}
-      {/*      resizeMode="cover" */}
-      {/*    /> */}
-      {/*  )} */}
-      {/* </ScrollView> */}
+      <Text style={styles.header}>Image Galleries</Text>
+      <Text style={styles.subHeader}>The best photos according to users</Text>
+      <ScrollView style={styles.galleryContainer}>
+        {photos.map((photo) => (
+          <Image
+            key={photo.url}
+            source={{ uri: photo.url }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+        ))}
+      </ScrollView>
     </View>
   );
 };

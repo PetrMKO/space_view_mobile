@@ -26,8 +26,6 @@ const App = () => {
     <UserContext.Provider value={userContextValue}>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name={Screens.Main} component={MainScreen} />
-          <Stack.Screen name={Screens.AuthSelector} component={AuthSelector} />
           <Stack.Screen
             name={Screens.Auth}
             component={SignInScreen}
@@ -35,6 +33,8 @@ const App = () => {
               mode: "login",
             }}
           />
+          <Stack.Screen name={Screens.AuthSelector} component={AuthSelector} />
+          <Stack.Screen name={Screens.Main} component={MainScreen} />
           <Stack.Screen name={Screens.Account} component={AccountScreen} />
         </Stack.Navigator>
       </NavigationContainer>
