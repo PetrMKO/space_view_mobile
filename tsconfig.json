@@ -26,5 +26,6 @@
   "include": [
     "src",
     "declaration.d.ts"
-  ]
+  ],
+  "extends": "expo/tsconfig.base"
 }

@@ -1,11 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { SignInScreen } from "screens";
+
+import { SignInScreen } from "./src/screens";
 
 const Stack = createNativeStackNavigator();
 
-export const App = () => {
+const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -14,6 +15,8 @@ export const App = () => {
     </NavigationContainer>
   );
 };
+
+export default App;
 
 // const styles = StyleSheet.create({
 //   container: {
