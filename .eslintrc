@@ -1,0 +1,120 @@
+{
+  "extends": [
+    "airbnb-typescript-prettier",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": [
+          "src"
+        ],
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
+  "ignorePatterns": [
+    "tools/*.*",
+    "**/vendor/*.js",
+    "**/externalContent/**/*.*",
+    "*.svg"
+  ],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "typescript-sort-keys",
+    "simple-import-sort",
+    "sort-keys-fix",
+    "sort-destructure-keys"
+  ],
+  "rules": {
+    "no-param-reassign": "off",
+    "react/jsx-props-no-spreading": "off",
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "import/first": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-use-before-define": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function"
+      }
+    ],
+    "camelcase": "off",
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/no-cycle": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "no-nested-ternary": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "react/no-array-index-key": "off",
+    "sort-keys-fix/sort-keys-fix": "error",
+    "sort-destructure-keys/sort-destructure-keys": "error",
+    "react/require-default-props": "off",
+    "import/no-extraneous-dependencies": "off",
+    "class-methods-use-this": "off",
+    "no-empty-function": "off",
+    "no-useless-constructor": "off",
+    "no-return-await": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "import/export": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "react/no-unstable-nested-components": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "*.ts.*"
+      ],
+      "rules": {
+        "simple-import-sort/sort": [
+          "error",
+          {
+            "groups": [
+              [
+                "^react",
+                "^\\~.*"
+              ],
+              [
+                "^\\u0000"
+              ],
+              [
+                "^\\.\\.(?!/?$)",
+                "^\\.\\./?$"
+              ],
+              [
+                "^\\./(?=.*/)(?!/?$)",
+                "^\\.(?!/?$)",
+                "^\\./?$"
+              ],
+              [
+                "^.+\\.s?css$"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

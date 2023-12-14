@@ -1,10 +1,19 @@
-import AuthScreen from './src/screens/AuthScreen/AuthScreen';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { SignInScreen } from "screens";
 
-export default function App() {
+const Stack = createNativeStackNavigator();
+
+export const App = () => {
   return (
-    <AuthScreen/>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="auth" component={SignInScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
 // const styles = StyleSheet.create({
 //   container: {

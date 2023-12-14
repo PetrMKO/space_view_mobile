@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
-const SignInScreen = () => {
-  const [login, setLogin] = useState('');
-  const [password, setPassword] = useState('');
+export const SignInScreen = () => {
+  const [login, setLogin] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = () => {
     // Здесь должна быть логика обработки данных формы
-    console.log('Login:', login, 'Password:', password);
+    console.log("Login:", login, "Password:", password);
   };
 
   return (
@@ -38,51 +44,49 @@ const SignInScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    backgroundColor: "#000080",
+    borderRadius: 20,
+    marginVertical: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    width: 200,
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 18,
+  },
   container: {
+    alignItems: "center",
+    backgroundColor: "#FFF",
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFF',
+    justifyContent: "center",
   },
   headerContainer: {
-    position: 'absolute',
-    top: 0,
-    width: '100%',
-    alignItems: 'center',
+    alignItems: "center",
     padding: 16,
+    position: "absolute",
+    top: 0,
+    width: "100%",
   },
   headerText: {
-    color: '#FFF',
+    color: "#FFF",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  input: {
+    backgroundColor: "#FFF",
+    borderColor: "#000080",
+    borderRadius: 5,
+    borderWidth: 1,
+    marginVertical: 10,
+    padding: 15,
+    width: "80%",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 20,
   },
-  input: {
-    width: '80%',
-    padding: 15,
-    marginVertical: 10,
-    borderWidth: 1,
-    borderColor: '#000080',
-    borderRadius: 5,
-    backgroundColor: '#FFF',
-  },
-  button: {
-    backgroundColor: '#000080',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    marginVertical: 10,
-    width: 200,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#FFF',
-    fontSize: 18,
-  },
 });
-
-export default SignInScreen;
