@@ -109,6 +109,7 @@ const getStyles = (theme: Theme) =>
       width: "80%",
     },
     title: {
+      color: theme.invertText,
       fontSize: 24,
       fontWeight: "bold",
       marginVertical: 20,

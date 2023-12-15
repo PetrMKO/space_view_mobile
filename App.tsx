@@ -21,9 +21,10 @@ const App = () => {
 
   useEffect(() => {
     const currentHour = new Date().getHours();
-    if (currentHour < 9 && currentHour > 21 && themeName === "light") {
+    if ((currentHour < 9 || currentHour > 21) && themeName === "light") {
       setTheme("dark");
-    } else if (themeName === "dark") {
+    }
+    if (currentHour > 9 && currentHour < 21 && themeName === "dark") {
       setTheme("light");
     }
   }, [themeName, setTheme]);
