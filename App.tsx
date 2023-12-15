@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
   const [user, setUser] = useState<User>();
-  const [theme, setTheme] = useState<Themes>("light");
+  const [themeName, setTheme] = useState<Themes>("light");
 
   const userContextValue = useMemo(
     () => ({
@@ -26,32 +26,44 @@ const App = () => {
     [user]
   );
 
+  const theme = themeConfig[themeName];
+
   const themeContextValue = useMemo(
     () => ({
       setTheme,
-      theme: themeConfig[theme],
+      theme,
     }),
-    [theme]
+    [themeName]
   );
 
   return (
     <UserContext.Provider value={userContextValue}>
       <ThemeContext.Provider value={themeContextValue}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: theme.headerBackground,
+              },
+              headerTintColor: theme.headerText,
+              headerTitleStyle: {
+                color: theme.headerText,
+              },
+            }}
+          >
+            <Stack.Screen
+              name={Screens.AuthSelector}
+              component={AuthSelector}
+              options={{
+                title: "Space View",
+              }}
+            />
             <Stack.Screen
               name={Screens.Auth}
               component={SignInScreen}
               initialParams={{
                 mode: "login",
               }}
-              options={{
-                title: "Space View",
-              }}
-            />
-            <Stack.Screen
-              name={Screens.AuthSelector}
-              component={AuthSelector}
               options={{
                 title: "Space View",
               }}

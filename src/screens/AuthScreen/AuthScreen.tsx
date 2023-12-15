@@ -10,7 +10,9 @@ import {
 } from "react-native";
 
 import { userApi } from "../../API/userApi";
+import { ThemeContext } from "../../context/themeContext";
 import { UserContext } from "../../context/userContext";
+import { Theme } from "../../themes/types";
 import { RootStackParamList, Screens } from "../../types/RootStackParamList";
 
 export const SignInScreen: FC = () => {
@@ -18,6 +20,7 @@ export const SignInScreen: FC = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState<boolean>();
+  const { theme } = useContext(ThemeContext);
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -29,19 +32,15 @@ export const SignInScreen: FC = () => {
           index: 0,
           routes: [{ name: Screens.Main }],
         });
-        console.log(data[0]);
-        console.log("asdfadf");
       } else {
         setIsError(true);
       }
     });
   };
+  const styles = getStyles(theme);
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Image Galleries</Text>
-      </View>
       <Text style={styles.title}>Sign in</Text>
       <TextInput
         style={styles.input}
@@ -64,50 +63,51 @@ export const SignInScreen: FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  button: {
-    alignItems: "center",
-    backgroundColor: "#000080",
-    borderRadius: 20,
-    marginVertical: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    width: 200,
-  },
-  buttonText: {
-    color: "#FFF",
-    fontSize: 18,
-  },
-  container: {
-    alignItems: "center",
-    backgroundColor: "#FFF",
-    flex: 1,
-    justifyContent: "center",
-  },
-  headerContainer: {
-    alignItems: "center",
-    padding: 16,
-    position: "absolute",
-    top: 0,
-    width: "100%",
-  },
-  headerText: {
-    color: "#FFF",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  input: {
-    backgroundColor: "#FFF",
-    borderColor: "#000080",
-    borderRadius: 5,
-    borderWidth: 1,
-    marginVertical: 10,
-    padding: 15,
-    width: "80%",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginVertical: 20,
-  },
-});
+const getStyles = (theme: Theme) =>
+  StyleSheet.create({
+    button: {
+      alignItems: "center",
+      backgroundColor: theme.mainBackground,
+      borderRadius: 20,
+      marginVertical: 10,
+      paddingHorizontal: 20,
+      paddingVertical: 10,
+      width: 200,
+    },
+    buttonText: {
+      color: theme.mainText,
+      fontSize: 18,
+    },
+    container: {
+      alignItems: "center",
+      backgroundColor: theme.invertBackground,
+      flex: 1,
+      justifyContent: "center",
+    },
+    headerContainer: {
+      alignItems: "center",
+      padding: 16,
+      position: "absolute",
+      top: 0,
+      width: "100%",
+    },
+    headerText: {
+      color: "#FFF",
+      fontSize: 20,
+      fontWeight: "bold",
+    },
+    input: {
+      backgroundColor: theme.invertBackground,
+      borderRadius: 5,
+      borderWidth: 1,
+      color: theme.invertText,
+      marginVertical: 10,
+      padding: 15,
+      width: "80%",
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginVertical: 20,
+    },
+  });

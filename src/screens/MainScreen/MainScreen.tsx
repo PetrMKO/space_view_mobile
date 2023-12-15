@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { nasaApi, PhotoOfDay } from "../../API/nasaApi";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
+import { ThemeContext } from "../../context/themeContext";
+import { Theme } from "../../themes/types";
 
 export const MainScreen = () => {
   const [photos, setPhotos] = useState<PhotoOfDay[]>([]);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     nasaApi.getPhotosOfDay({ count: 6 }).then(({ data }) => {
@@ -13,10 +16,11 @@ export const MainScreen = () => {
     });
   }, []);
 
+  const styles = getStyles(theme);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Image Galleries</Text>
-      <Text style={styles.subHeader}>The best photos according to users</Text>
+      <Text style={styles.subHeader}>Random photos</Text>
       <ScrollView style={styles.galleryContainer}>
         <ImageGallery photos={photos} />
       </ScrollView>
@@ -24,30 +28,27 @@ export const MainScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    backgroundColor: "#fff",
-    flex: 1,
-    justifyContent: "center",
-    paddingTop: 40,
-  },
-  galleryContainer: {
-    flex: 1,
-    width: "100%",
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  image: {
-    height: 200,
-    marginBottom: 10,
-    width: "100%",
-  },
-  subHeader: {
-    color: "grey",
-    fontSize: 18,
-    marginBottom: 20,
-  },
-});
+const getStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      alignItems: "center",
+      backgroundColor: theme.invertBackground,
+      flex: 1,
+      justifyContent: "center",
+      paddingTop: 20,
+    },
+    galleryContainer: {
+      flex: 1,
+      width: "100%",
+    },
+    image: {
+      height: 200,
+      marginBottom: 10,
+      width: "100%",
+    },
+    subHeader: {
+      color: theme.invertText,
+      fontSize: 20,
+      marginBottom: 20,
+    },
+  });
