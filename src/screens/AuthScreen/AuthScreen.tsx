@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 import { userApi } from "../../API/userApi";
-import { UserContext } from "../../context/UserContext/userContext";
+import { UserContext } from "../../context/userContext";
 import { RootStackParamList, Screens } from "../../types/RootStackParamList";
 
 export const SignInScreen: FC = () => {

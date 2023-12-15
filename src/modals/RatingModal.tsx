@@ -15,7 +15,7 @@ import { Rating } from "react-native-elements";
 
 import { PhotoOfDay } from "../API/nasaApi";
 import { userApi } from "../API/userApi";
-import { UserContext } from "../context/UserContext/userContext";
+import { UserContext } from "../context/userContext";
 
 type Props = {
   photo: PhotoOfDay;
