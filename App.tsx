@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useMemo, useState } from "react";
 
 import { User } from "./src/API/userApi";
+import { AccountButton } from "./src/components/AccountButton";
 import { UserContext } from "./src/context/UserContext/userContext";
 import { AuthSelector, SignInScreen } from "./src/screens";
 import { AccountScreen } from "./src/screens/AccountScreen/AccountScreen";
@@ -47,6 +48,7 @@ const App = () => {
             name={Screens.Main}
             component={MainScreen}
             options={{
+              headerRight: () => <AccountButton />,
               title: "Gallery",
             }}
           />
@@ -64,12 +66,3 @@ const App = () => {
 };
 
 export default App;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });

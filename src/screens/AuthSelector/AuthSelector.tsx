@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { RootStackParamList, Screens } from "../../types/RootStackParamList";
 
-export const AuthSelector = ({ navigation: { navigate } }) => {
+export const AuthSelector = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const handleSignIn = () => {
@@ -18,7 +18,7 @@ export const AuthSelector = ({ navigation: { navigate } }) => {
   const handleLogIn = () => {
     // Обработка нажатия на кнопку Log in
     navigation.push(Screens.Auth, {
-      mode: "redister",
+      mode: "signin",
     });
   };
 

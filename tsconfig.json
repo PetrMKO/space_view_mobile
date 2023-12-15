@@ -1,7 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "rootDir": "./src",
     "target": "es5",
     "lib": [
       "DOM"
@@ -14,11 +12,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "jsx": "react",
-    "paths": {
-      "screens": [
-        "screens"
-      ]
-    }
   },
   "exclude": [
     "node_modules"
@@ -27,5 +20,6 @@
     "src",
     "declaration.d.ts"
   ],
+
   "extends": "expo/tsconfig.base"
 }

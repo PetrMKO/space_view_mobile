@@ -15,7 +15,6 @@ export const AccountScreen = () => {
 
   return (
     <View style={styles.container}>
-      {photos.length}
       <Text style={styles.header}>Image Galleries</Text>
       <Text style={styles.subHeader}>The best photos according to users</Text>
       <ScrollView style={styles.galleryContainer}>

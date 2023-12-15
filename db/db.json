@@ -22,7 +22,6 @@
     }
   ],
   "favorites": [
-    [
       {
         "userId": "user01",
         "copyright": "Ivan Eder",
@@ -127,7 +126,6 @@
         "title": "Opportunity Rockets Toward Mars",
         "url": "https://apod.nasa.gov/apod/image/0309/launchmerb_ecliptic.gif"
       }
-    ]
   ],
   "blocked": [
     {

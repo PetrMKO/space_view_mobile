@@ -7,7 +7,6 @@ export const userRequest = axios.create({
 });
 
 export type User = {
-  id: string;
   login: string;
   password: string;
 };
@@ -18,10 +17,10 @@ export type UserPhoto = PhotoOfDay & {
 
 const userApiConfig = (instance: AxiosInstance) => ({
   getBlocked: (userId: string) => {
-    return instance.get<UserPhoto[]>(`favorites&userId=${userId}`);
+    return instance.get<UserPhoto[]>(`blocked?userId=${userId}`);
   },
   getFavorites: (userId: string) => {
-    return instance.get<UserPhoto[]>(`blocked&userId=${userId}`);
+    return instance.get<UserPhoto[]>(`favorites?userId=${userId}`);
   },
   login: (login: string, password: string) => {
     return instance.get<User[]>(`users?login=${login}&password=${password}`);

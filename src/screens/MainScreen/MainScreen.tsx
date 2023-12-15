@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { nasaApi, PhotoOfDay } from "../../API/nasaApi";
+import ImageGallery from "../../components/ImageGallery/ImageGallery";
 
 export const MainScreen = () => {
   const [photos, setPhotos] = useState<PhotoOfDay[]>([]);
@@ -17,14 +18,7 @@ export const MainScreen = () => {
       <Text style={styles.header}>Image Galleries</Text>
       <Text style={styles.subHeader}>The best photos according to users</Text>
       <ScrollView style={styles.galleryContainer}>
-        {photos.map((photo) => (
-          <Image
-            key={photo.url}
-            source={{ uri: photo.url }}
-            style={styles.image}
-            resizeMode="cover"
-          />
-        ))}
+        <ImageGallery photos={photos} />
       </ScrollView>
     </View>
   );
