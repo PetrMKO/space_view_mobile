@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 import { PhotoOfDay } from "../../API/nasaApi";
 import { userApi } from "../../API/userApi";
@@ -33,17 +33,19 @@ const getStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       alignItems: "center",
-      backgroundColor: theme.mainBackground,
+      backgroundColor: theme.invertBackground,
       flex: 1,
       justifyContent: "center",
-      paddingTop: 30,
+      paddingTop: 10,
     },
     galleryContainer: {
       flex: 1,
       width: "100%",
     },
     header: {
+      color: theme.invertText,
       fontSize: 24,
       fontWeight: "bold",
+      marginBottom: 10,
     },
   });

@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 
 import { User } from "./src/API/userApi";
 import { AccountButton } from "./src/components/AccountButton";
-import { ThemeContextType, Themes } from "./src/context/themeContext";
+import { ThemeContext, Themes } from "./src/context/themeContext";
 import { UserContext } from "./src/context/userContext";
 import { AuthSelector, SignInScreen } from "./src/screens";
 import { AccountScreen } from "./src/screens/AccountScreen/AccountScreen";
@@ -36,7 +36,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={userContextValue}>
-      <ThemeContextType.Provider value={themeContextValue}>
+      <ThemeContext.Provider value={themeContextValue}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen
@@ -73,7 +73,7 @@ const App = () => {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </ThemeContextType.Provider>
+      </ThemeContext.Provider>
     </UserContext.Provider>
   );
 };
