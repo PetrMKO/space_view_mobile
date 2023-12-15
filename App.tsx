@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { User } from "./src/API/userApi";
 import { AccountButton } from "./src/components/AccountButton";
@@ -35,6 +35,15 @@ const App = () => {
     }),
     [themeName]
   );
+
+  useEffect(() => {
+    const currentHour = new Date().getHours();
+    if (currentHour < 9 && currentHour > 21 && themeName === "light") {
+      setTheme("dark");
+    } else if (themeName === "dark") {
+      setTheme("light");
+    }
+  }, [themeName, setTheme]);
 
   return (
     <UserContext.Provider value={userContextValue}>
