@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import React, { FC, useContext, useState } from "react";
@@ -28,6 +29,8 @@ export const SignInScreen: FC = () => {
     userApi.login(login, password).then(({ data }) => {
       if (data.length) {
         setUser(data[0]);
+        AsyncStorage.setItem("user", JSON.stringify(data[0]));
+
         navigation.reset({
           index: 0,
           routes: [{ name: Screens.Main }],

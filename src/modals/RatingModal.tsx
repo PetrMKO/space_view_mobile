@@ -47,7 +47,8 @@ const RatingModal: FC<Props> = ({ onClose, photo, visible }) => {
 
   useEffect(() => {
     userApi.getFavorites(user.login).then(({ data }) => {
-      if (data.length) {
+      const links = data.map((item) => item.url);
+      if (links.includes(photo.url)) {
         setIsFavorite(true);
       }
     });

@@ -1,12 +1,13 @@
-import { User } from "API/userApi";
 import { createContext } from "react";
 
+import { User } from "../API/userApi";
+
 type UserContextType = {
-  user: User | undefined;
-  setUser: (user: User) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 };
 
 export const UserContext = createContext<UserContextType>({
   setUser: () => null,
-  user: undefined,
+  user: null,
 });

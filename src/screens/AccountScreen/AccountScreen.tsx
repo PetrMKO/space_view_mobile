@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useContext, useEffect, useState } from "react";
 import {
   ScrollView,
@@ -12,16 +13,20 @@ import { userApi } from "../../API/userApi";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import PageTitle from "../../components/PageTitle";
 import { ThemeContext } from "../../context/themeContext";
+import { UserContext } from "../../context/userContext";
 import { Theme } from "../../themes/types";
 
 export const AccountScreen = () => {
   const [photos, setPhotos] = useState<PhotoOfDay[]>([]);
   const { setTheme, theme } = useContext(ThemeContext);
+  const { setUser, user } = useContext(UserContext);
 
   useEffect(() => {
-    userApi.getFavorites("user01").then(({ data }) => {
-      setPhotos(data);
-    });
+    if (user) {
+      userApi.getFavorites(user.login).then(({ data }) => {
+        setPhotos(data);
+      });
+    }
   }, []);
 
   const onChangeTheme = () => {
@@ -39,7 +44,13 @@ export const AccountScreen = () => {
           <TouchableOpacity style={styles.button} onPress={onChangeTheme}>
             <Text style={styles.buttonText}>Change theme</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              AsyncStorage.removeItem("user");
+              setUser(null);
+            }}
+          >
             <Text style={styles.buttonText}>Log out</Text>
           </TouchableOpacity>
         </View>
