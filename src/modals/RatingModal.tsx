@@ -13,19 +13,20 @@ import {
 } from "react-native";
 import { Rating } from "react-native-elements";
 
-import { PhotoOfDay } from "../API/nasaApi";
+import { Photo, PhotoOfDay } from "../API/nasaApi";
 import { userApi } from "../API/userApi";
 import { ThemeContext } from "../context/themeContext";
 import { UserContext } from "../context/userContext";
 import { Theme } from "../themes/types";
 
 type Props = {
-  photo: PhotoOfDay;
+  photo: Photo;
   visible: boolean;
   onClose: () => void;
+  onBlock?: (photo: Photo) => void;
 };
 
-const RatingModal: FC<Props> = ({ onClose, photo, visible }) => {
+const RatingModal: FC<Props> = ({ onBlock, onClose, photo, visible }) => {
   const { user } = useContext(UserContext);
   const [rating, setRating] = useState(0);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
@@ -33,8 +34,8 @@ const RatingModal: FC<Props> = ({ onClose, photo, visible }) => {
 
   const downloadAndShareImage = async () => {
     try {
-      const fileUri = FileSystem.cacheDirectory + photo.hdurl.split("/").pop();
-      const { uri } = await FileSystem.downloadAsync(photo.hdurl, fileUri);
+      const fileUri = FileSystem.cacheDirectory + photo.url.split("/").pop();
+      const { uri } = await FileSystem.downloadAsync(photo.url, fileUri);
 
       if (!(await Sharing.isAvailableAsync())) {
         return;
@@ -46,19 +47,37 @@ const RatingModal: FC<Props> = ({ onClose, photo, visible }) => {
   };
 
   useEffect(() => {
-    userApi.getFavorites(user.login).then(({ data }) => {
-      const links = data.map((item) => item.url);
+    userApi.getFavorites(user.id).then(({ data }) => {
+      const links = data.photos.map((item) => item.url);
       if (links.includes(photo.url)) {
         setIsFavorite(true);
       }
     });
   }, []);
 
-  const onUndoFavorite = () => {
-    console.log("undo");
+  const onAddToFavorite = () => {
+    userApi.addToFavorites(user.id, photo.url).then(() => {
+      slideOut();
+    });
   };
 
-  const modalHeight = 450;
+  const onRate = (value: number) => {
+    setRating(value);
+    userApi.rate(user.id, photo.url, value).then(() => {
+      slideOut();
+    });
+  };
+
+  const onBlockPhoto = () => {
+    userApi.addToBlocked(user.id, photo.url).then(() => {
+      slideOut();
+      setTimeout(() => {
+        onBlock(photo);
+      }, 300);
+    });
+  };
+
+  const modalHeight = 550;
   const slideAnim = useRef(new Animated.Value(modalHeight)).current; // Initial value for bottom
 
   const slideIn = () => {
@@ -118,31 +137,42 @@ const RatingModal: FC<Props> = ({ onClose, photo, visible }) => {
           { transform: [{ translateY: slideAnim }] }, // Use translateY to slide the modal
         ]}
       >
-        <Text style={styles.header}> Do you like the photo?</Text>
-        <Text style={styles.subHeader}> Rate:</Text>
         <View style={styles.thumbContainer} {...panResponder.panHandlers}>
           <View style={styles.thumb} />
         </View>
-        <Rating
-          showRating={false}
-          type="custom"
-          startingValue={rating}
-          tintColor={theme.invertBackground}
-          ratingBackgroundColor={theme.mainBackground}
-          onFinishRating={(value: number) => setRating(value)}
-          style={styles.rating}
-        />
+        {isFavorite && (
+          <Text style={styles.header}>
+            You already add this photo to favorites, do you want to download it?
+          </Text>
+        )}
+
+        {!isFavorite && (
+          <>
+            <Text style={styles.header}> Do you like the photo?</Text>
+            <Text style={styles.subHeader}> Rate:</Text>
+            <Rating
+              showRating={false}
+              type="custom"
+              startingValue={rating}
+              tintColor={theme.invertBackground}
+              ratingBackgroundColor={theme.mainBackground}
+              onFinishRating={onRate}
+              style={styles.rating}
+            />
+          </>
+        )}
         <TouchableOpacity style={styles.button} onPress={downloadAndShareImage}>
           <Text style={styles.buttonText}>Download</Text>
         </TouchableOpacity>
-        {isFavorite ? (
-          <TouchableOpacity style={styles.button} onPress={onUndoFavorite}>
-            <Text style={styles.buttonText}>Undo from favorites</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity style={styles.button} onPress={onUndoFavorite}>
-            <Text style={styles.buttonText}>Add to favorite</Text>
-          </TouchableOpacity>
+        {!isFavorite && (
+          <>
+            <TouchableOpacity style={styles.button} onPress={onAddToFavorite}>
+              <Text style={styles.buttonText}>Add to favorite</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={onBlockPhoto}>
+              <Text style={styles.buttonText}>Block photo</Text>
+            </TouchableOpacity>
+          </>
         )}
       </Animated.View>
     </Modal>
@@ -174,6 +204,7 @@ const getStyles = (theme: Theme) =>
       fontSize: 20,
       fontWeight: "bold",
       marginVertical: 18,
+      textAlign: "center",
     },
     modalContent: {
       alignItems: "center",
@@ -181,7 +212,7 @@ const getStyles = (theme: Theme) =>
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
       bottom: 0,
-      height: 300,
+      height: 400,
       justifyContent: "flex-start",
       padding: 20,
       position: "absolute",

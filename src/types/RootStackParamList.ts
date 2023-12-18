@@ -1,4 +1,4 @@
-type AuthMode = "login" | "signin";
+export type AuthMode = "login" | "signin";
 
 export enum Screens {
   Main = "Main",

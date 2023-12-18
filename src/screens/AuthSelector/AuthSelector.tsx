@@ -1,27 +1,26 @@
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { useContext } from "react";
+import React, { FC, useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { ThemeContext } from "../../context/themeContext";
 import { Theme } from "../../themes/types";
 import { RootStackParamList, Screens } from "../../types/RootStackParamList";
 
-export const AuthSelector = () => {
+export const AuthSelector: FC = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   const { theme } = useContext(ThemeContext);
-
   const handleSignIn = () => {
     // Обработка нажатия на кнопку Sign up
     navigation.push(Screens.Auth, {
-      mode: "login",
+      mode: "signin",
     });
   };
 
   const handleLogIn = () => {
     // Обработка нажатия на кнопку Log in
     navigation.push(Screens.Auth, {
-      mode: "signin",
+      mode: "login",
     });
   };
 

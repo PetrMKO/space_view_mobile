@@ -1,15 +1,16 @@
 import React, { FC, useState } from "react";
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 
-import { PhotoOfDay } from "../../API/nasaApi";
+import { Photo } from "../../API/nasaApi";
 import RatingModal from "../../modals/RatingModal";
 
 type Props = {
-  photos: PhotoOfDay[];
+  photos: Photo[];
+  onBlock?: (photo: Photo) => void;
 };
 
-const ImageGallery: FC<Props> = ({ photos }) => {
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoOfDay | null>(null);
+const ImageGallery: FC<Props> = ({ onBlock, photos }) => {
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   return (
     <>
@@ -29,6 +30,7 @@ const ImageGallery: FC<Props> = ({ photos }) => {
       </ScrollView>
       {selectedPhoto && (
         <RatingModal
+          onBlock={onBlock}
           photo={selectedPhoto}
           visible={!!selectedPhoto}
           onClose={() => setSelectedPhoto(null)}

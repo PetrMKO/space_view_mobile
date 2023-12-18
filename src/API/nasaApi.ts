@@ -5,14 +5,17 @@ export const nasaRequest = axios.create({
   baseURL: "https://",
 });
 
-export type PhotoOfDay = {
+export type Photo = {
+  url: string;
+};
+
+export type PhotoOfDay = Photo & {
   date: Date;
   explanation: string;
   hdurl: string;
   media_type: string;
   service_version: string;
   title: string;
-  url: string;
   isFavorite?: boolean;
 };
 

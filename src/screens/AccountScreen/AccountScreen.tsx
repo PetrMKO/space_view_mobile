@@ -8,8 +8,7 @@ import {
   View,
 } from "react-native";
 
-import { PhotoOfDay } from "../../API/nasaApi";
-import { userApi } from "../../API/userApi";
+import { userApi, UserPhoto } from "../../API/userApi";
 import ImageGallery from "../../components/ImageGallery/ImageGallery";
 import PageTitle from "../../components/PageTitle";
 import { ThemeContext } from "../../context/themeContext";
@@ -17,21 +16,17 @@ import { UserContext } from "../../context/userContext";
 import { Theme } from "../../themes/types";
 
 export const AccountScreen = () => {
-  const [photos, setPhotos] = useState<PhotoOfDay[]>([]);
-  const { setTheme, theme } = useContext(ThemeContext);
+  const [photos, setPhotos] = useState<UserPhoto[]>([]);
+  const { theme } = useContext(ThemeContext);
   const { setUser, user } = useContext(UserContext);
 
   useEffect(() => {
     if (user) {
-      userApi.getFavorites(user.login).then(({ data }) => {
-        setPhotos(data);
+      userApi.getFavorites(user.id).then(({ data }) => {
+        setPhotos(data.photos);
       });
     }
   }, []);
-
-  const onChangeTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
 
   const styles = getStyles(theme);
 
@@ -41,9 +36,6 @@ export const AccountScreen = () => {
       <ScrollView style={styles.galleryContainer}>
         <ImageGallery photos={photos} />
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={onChangeTheme}>
-            <Text style={styles.buttonText}>Change theme</Text>
-          </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -68,7 +60,7 @@ const getStyles = (theme: Theme) =>
       marginVertical: 10,
       paddingHorizontal: 20,
       paddingVertical: 10,
-      width: 200,
+      width: "100%",
     },
     buttonContainer: {
       flexDirection: "row",

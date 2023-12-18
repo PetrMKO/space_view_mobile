@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -14,37 +14,55 @@ import { userApi } from "../../API/userApi";
 import { ThemeContext } from "../../context/themeContext";
 import { UserContext } from "../../context/userContext";
 import { Theme } from "../../themes/types";
-import { RootStackParamList, Screens } from "../../types/RootStackParamList";
+import {
+  AuthMode,
+  RootStackParamList,
+  Screens,
+} from "../../types/RootStackParamList";
 
-export const SignInScreen: FC = () => {
+type Props = {
+  route: RouteProp<RootStackParamList, Screens.Auth>;
+};
+
+export const SignInScreen: FC<Props> = ({ route }) => {
   const { setUser } = useContext(UserContext);
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [isError, setIsError] = useState<boolean>();
+  const [isError, setIsError] = useState<boolean>(false);
   const { theme } = useContext(ThemeContext);
+  const mode: AuthMode = route.params.mode ?? "login";
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   const handleSubmit = () => {
-    userApi.login(login, password).then(({ data }) => {
-      if (data.length) {
-        setUser(data[0]);
-        AsyncStorage.setItem("user", JSON.stringify(data[0]));
-
+    const { login: logIn, register } = userApi;
+    const request =
+      mode === "login" ? logIn(login, password) : register(login, password);
+    request
+      .then(({ data }) => {
+        setUser(data);
+        AsyncStorage.setItem("user", JSON.stringify(data));
         navigation.reset({
           index: 0,
           routes: [{ name: Screens.Main }],
         });
-      } else {
+      })
+      .catch(() => {
         setIsError(true);
-      }
-    });
+      });
   };
+
+  useEffect(() => {
+    setIsError(false);
+  }, [login, password]);
+
   const styles = getStyles(theme);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign in</Text>
+      <Text style={styles.title}>
+        {mode === "signin" ? "Sign up" : "Log in"}
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Login"
@@ -59,6 +77,13 @@ export const SignInScreen: FC = () => {
         onChangeText={setPassword}
         secureTextEntry
       />
+      {isError && (
+        <Text style={styles.errorText}>
+          {mode === "signin"
+            ? "User with this login already exist"
+            : "Wrong login or password"}
+        </Text>
+      )}
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
@@ -86,6 +111,10 @@ const getStyles = (theme: Theme) =>
       backgroundColor: theme.invertBackground,
       flex: 1,
       justifyContent: "center",
+    },
+    errorText: {
+      color: "indianred",
+      fontSize: 18,
     },
     headerContainer: {
       alignItems: "center",
